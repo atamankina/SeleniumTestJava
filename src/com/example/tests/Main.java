@@ -1,8 +1,8 @@
 /**
  * The scenario is 
  * 1. On the main page, click Develop.
- * 2. On the top menu, select Vizualization.
- * 3. On the side menu, select What is Datalens.
+ * 2. On the top menu, select Visualization.
+ * 3. On the side menu, select What is Data lens.
  * 4. Verify image presence.
  */
 package com.example.tests;
