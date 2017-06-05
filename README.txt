@@ -11,5 +11,6 @@ Prerequisites:
 Instructions:
 1. Clone the repo.
 2. Execute java -jar /path/to/seleniumtest.jar
+   In Windows, you can just double-click the seleniumtest.jar file in the folder.
 
 Note: do not remove the chromdriver folder and the chrome driver in it, the test wouldn't work without it. 
