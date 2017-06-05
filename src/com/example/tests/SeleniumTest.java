@@ -1,14 +1,16 @@
 /**
- * 
+ * The class provides methods to navigate to specific site elements and to verify image presence.
  */
 package com.example.tests;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
+import static org.junit.Assert.*;
 
 /**
  * @author Galina
@@ -35,7 +37,13 @@ public class SeleniumTest {
 	 * @throws InterruptedException because of the thread sleep to slow down the process
 	 */
 	public void findAndClickElementByXpath(String xpath) throws InterruptedException{
+		try{
+			assertTrue(verifyElementPresent(By.xpath(xpath)));
+			} catch(AssertionError e){
+				System.out.println("Element not found: " + xpath); 
+			}
 		WebElement element = driver.findElement(By.xpath(xpath));
+		System.out.println("Element found: " + xpath);
 		Thread.sleep(2000);
 		element.click();
 	}
@@ -44,21 +52,34 @@ public class SeleniumTest {
 	 * verify if image is shown on the page by image xpath
 	 * @param xpath = path to the required image
 	 * @throws InterruptedException because of the thread sleep to slow down the process
+	 *                              so that you can see the progress
 	 */
-	public void verifyImagePresentByXpath(String xpath) throws InterruptedException{
+	public void verifyImageShownByXpath(String xpath) throws InterruptedException{
+		try{
+			assertTrue(verifyElementPresent(By.xpath(xpath)));
+			} catch(AssertionError e){
+				System.out.println("Image element not found: " + xpath); 
+		}
 		WebElement image = driver.findElement(By.xpath(xpath));
+		System.out.println("Image found: " + xpath);
 		Thread.sleep(2000);
     	Boolean imagePresent = (Boolean) ((JavascriptExecutor)driver)
     			.executeScript("return arguments[0].complete && "
     					+ "typeof arguments[0].naturalWidth != \"undefined\" && "
     					+ "arguments[0].naturalWidth > 0", image);
-		if(imagePresent){
+
+		try{
+			assertTrue(imagePresent);
+			} catch(AssertionError e){
+				System.out.println("Image not shown."); 
+			}
+		
+    	if(imagePresent){
 			Actions action = new Actions(driver);
 			action.moveToElement(image).perform();
-			Thread.sleep(3000);
-			System.out.println("Image is shown with the size " + image.getSize());
-		}
-		else{System.out.println("Image is not shown");}
+			Thread.sleep(2000);
+			System.out.println("Image is shown.");
+    	}
 
 	}
 	
@@ -69,6 +90,18 @@ public class SeleniumTest {
 		if (driver != null) driver.quit();
 	}
 	
+    /**
+     * @param by = selenium locator
+     * @return = true if element present, false if not
+     */
+    private boolean verifyElementPresent(By by) {
+	    try {
+	      driver.findElement(by);
+	      return true;
+	    } catch (NoSuchElementException e) {
+	      return false;
+	    }
+	  }
 	
 
 }
