@@ -19,34 +19,28 @@ public class Main {
 	 */
 	public static void main(String[] args) throws InterruptedException {
 		 
+		  //Input
+		  String baseurl = "https://developer.here.com/";
+		  String develop = "//*[@id=\"container\"]/header/div/div[2]/nav/ul/li[1]/div/span";
+		  String visualization = "//*[@id=\"container\"]/header/div/div[2]/nav/ul/li[1]/div/div/ul/ul[4]/li[4]/a";
+		  String whatis = "//*[@id=\"toc\"]/ul/li[1]/ul/li[1]/a";
+		  String image = "//*[@id=\"whatis__fig-whatis-example\"]/a/img";
+		  
 		  //set environment and go to website
-		  String chromepath = "./chromedriver/chromedriver.exe";	 
-		//  String baseurl = "https://developer.here.com/";
-		  String baseurl = "file:///C:/Users/atamanki/Documents/uni/anwsys_ha1/final/index.html";
+		  String chromepath = "./chromedriver/chromedriver.exe";
 		  SeleniumTest st = new SeleniumTest();
 		  st.setChromeEnvironment(chromepath, baseurl);
 
+		  //go through scenario
 		  try{
-/*		  //navbar menu
-		  st.findAndClickElementByXpath(
-				  "//*[@id=\"container\"]/header/div/div[2]/nav/ul/li[1]/div/span");
-		  		  
-		  //dropdown menu
-		  st.findAndClickElementByXpath(
-				  "//*[@id=\"container\"]/header/div/div[2]/nav/ul/li[1]/div/div/ul/ul[4]/li[4]/a");
-		 		  
-		  //side menu
-		  st.findAndClickElementByXpath(
-				  "//*[@id=\"toc\"]/ul/li[1]/ul/li[1]/a");
-		  		  		  
-		  //verify image
-		  st.verifyImageShownByXpath(
-				  "//*[@id=\"whatis__fig-whatis-example\"]/a/img");*/
-		  
-		  st.verifyImageShownByXpath("/html/body/div/div[2]/div[2]/div[1]/div[1]/div/img");
+		      st.findAndClickElementByXpath(develop);
+		  	  st.findAndClickElementByXpath(visualization);
+		 	  st.findAndClickElementByXpath(whatis);
+		      st.verifyImageShownByXpath(image);	  
 		  } catch(Exception e){
-			  st.shutDownDriver();
+		  		st.shutDownDriver();
 		  }
+		  
 		  //quit
 		  st.shutDownDriver();
 		  
