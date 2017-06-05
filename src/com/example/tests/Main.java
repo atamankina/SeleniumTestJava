@@ -25,9 +25,11 @@ public class Main {
 		  //set environment
 		  String chromepath = "./chromedriver/chromedriver.exe";	 
 		  System.setProperty("webdriver.chrome.driver", chromepath);
+		  
+		  //start WebDriver
+		  WebDriver driver = new ChromeDriver();
 
 		  //go to website
-		  WebDriver driver = new ChromeDriver();
 		  driver.get("https://developer.here.com/");
 		  Thread.sleep(1000); //Thread sleep is for a user to see the progress.
 		  
