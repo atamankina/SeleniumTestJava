@@ -55,6 +55,7 @@ public class SeleniumTest {
 		if(imagePresent){
 			Actions action = new Actions(driver);
 			action.moveToElement(image).perform();
+			Thread.sleep(3000);
 			System.out.println("Image is shown with the size " + image.getSize());
 		}
 		else{System.out.println("Image is not shown");}
