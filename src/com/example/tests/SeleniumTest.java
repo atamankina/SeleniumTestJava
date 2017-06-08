@@ -32,20 +32,39 @@ public class SeleniumTest {
 	}
 			
 	/**
-	 * find and click specific element by xpath
+	 * find specific element by xpath
+	 * (currently, the test logic is questionable
 	 * @param xpath = path to the required element
-	 * @throws InterruptedException because of the thread sleep to slow down the process
 	 */
-	public void findAndClickElementByXpath(String xpath) throws InterruptedException{
+	public void verifyElementPresentByXpath(String xpath) {
+		
 		try{
 			assertTrue(verifyElementPresent(By.xpath(xpath)));
 			} catch(AssertionError e){
-				System.out.println("Element not found: " + xpath); 
+				System.out.println("Element not found: " + xpath); return;
 			}
-		WebElement element = driver.findElement(By.xpath(xpath));
 		System.out.println("Element found: " + xpath);
+		
+	}
+	
+	/**
+	 * click a link and verify that the correct page is shown by page URL
+	 * @param xpath = path to the required element with the link to click
+	 * @param url = url of the target page
+	 * @throws InterruptedException
+	 */
+	public void clickAndVerifyRedirect(String xpath, String url) throws InterruptedException{
+		
+		WebElement element = driver.findElement(By.xpath(xpath));
 		Thread.sleep(2000);
 		element.click();
+		try{
+		assertEquals(url, driver.getCurrentUrl());
+		}catch(AssertionError ae){
+			System.out.println("Not matching url. Redirected to wrong page."); return;
+		}
+		System.out.println("Redirected to correct page.");
+		
 	}
 	
 	/**
@@ -55,26 +74,21 @@ public class SeleniumTest {
 	 *                              so that you can see the progress
 	 */
 	public void verifyImageShownByXpath(String xpath) throws InterruptedException{
-		try{
-			assertTrue(verifyElementPresent(By.xpath(xpath)));
-			} catch(AssertionError e){
-				System.out.println("Image element not found: " + xpath); 
-		}
+		
 		WebElement image = driver.findElement(By.xpath(xpath));
-		System.out.println("Image found: " + xpath);
 		Thread.sleep(2000);
-    	Boolean imagePresent = (Boolean) ((JavascriptExecutor)driver)
+    	Boolean imageShown = (Boolean) ((JavascriptExecutor)driver)
     			.executeScript("return arguments[0].complete && "
     					+ "typeof arguments[0].naturalWidth != \"undefined\" && "
     					+ "arguments[0].naturalWidth > 0", image);
 
 		try{
-			assertTrue(imagePresent);
+			assertTrue(imageShown);
 			} catch(AssertionError e){
-				System.out.println("Image not shown."); 
+				System.out.println("Image not shown."); return;
 			}
 		
-    	if(imagePresent){
+    	if(imageShown){
 			Actions action = new Actions(driver);
 			action.moveToElement(image).perform();
 			Thread.sleep(2000);
@@ -91,6 +105,7 @@ public class SeleniumTest {
 	}
 	
     /**
+     * boolean method to check  if the element is present on the page
      * @param by = selenium locator
      * @return = true if element present, false if not
      */

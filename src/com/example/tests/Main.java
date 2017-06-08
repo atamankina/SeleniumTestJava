@@ -22,8 +22,11 @@ public class Main {
 		  //Input
 		  String baseurl = "https://developer.here.com/";
 		  String develop = "//*[@id=\"container\"]/header/div/div[2]/nav/ul/li[1]/div/span";
+		  String mainurl = "https://developer.here.com/";
 		  String visualization = "//*[@id=\"container\"]/header/div/div[2]/nav/ul/li[1]/div/div/ul/ul[4]/li[4]/a";
+		  String visurl = "https://developer.here.com/visualization/documentation/topics/overview.html";
 		  String whatis = "//*[@id=\"toc\"]/ul/li[1]/ul/li[1]/a";
+		  String whatisurl = "https://developer.here.com/visualization/documentation/topics/whatis.html";
 		  String image = "//*[@id=\"whatis__fig-whatis-example\"]/a/img";
 		  
 		  //set environment and go to website
@@ -33,12 +36,16 @@ public class Main {
 
 		  //go through scenario
 		  try{
-		      st.findAndClickElementByXpath(develop);
-		  	  st.findAndClickElementByXpath(visualization);
-		 	  st.findAndClickElementByXpath(whatis);
+		      st.verifyElementPresentByXpath(develop);
+		      st.clickAndVerifyRedirect(develop, mainurl);
+		  	  st.verifyElementPresentByXpath(visualization);
+		  	  st.clickAndVerifyRedirect(visualization, visurl);
+		 	  st.verifyElementPresentByXpath(whatis);
+		 	  st.clickAndVerifyRedirect(whatis, whatisurl);
+		 	  st.verifyElementPresentByXpath(image);
 		      st.verifyImageShownByXpath(image);	  
 		  } catch(Exception e){
-		  		st.shutDownDriver();
+		  		e.printStackTrace(); st.shutDownDriver();
 		  }
 		  
 		  //quit
