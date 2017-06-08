@@ -32,8 +32,7 @@ public class SeleniumTest {
 	}
 			
 	/**
-	 * find specific element by xpath
-	 * (currently, the test logic is questionable
+	 * verify if specific element is present on the page by its xpath
 	 * @param xpath = path to the required element
 	 */
 	public void verifyElementPresentByXpath(String xpath) {
@@ -77,6 +76,7 @@ public class SeleniumTest {
 		
 		WebElement image = driver.findElement(By.xpath(xpath));
 		Thread.sleep(2000);
+		//check if the image is really shown on the page 
     	Boolean imageShown = (Boolean) ((JavascriptExecutor)driver)
     			.executeScript("return arguments[0].complete && "
     					+ "typeof arguments[0].naturalWidth != \"undefined\" && "
