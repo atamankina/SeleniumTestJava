@@ -5,7 +5,7 @@ The Selenium test goes through the following scenario:
  * 4. Verify image presence.
 
 Prerequisites:
-1. A Widnows machine.
+1. A Windows machine.
 2. JDK 8 installed.
 3. Google Chrome installed in its default location.
 
